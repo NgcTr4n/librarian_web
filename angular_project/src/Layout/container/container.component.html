@@ -1,0 +1,78 @@
+<div class="search-bar mb-4">
+  <input type="text" class="form-control"  placeholder="&#61442; Searching..." [(ngModel)]="searchTerm" (input)="onSearch()">
+</div>
+<div class="mb-4">
+  <ul class="nav nav-pills">
+    <li class="nav-item">
+      <a class="nav-link" (click)="filterByCategory('All')">All</a>
+    </li>
+    <li class="nav-item" *ngFor="let category of categories">
+      <a class="nav-link" (click)="filterByCategory(category)">
+        {{ category }}
+      </a>
+    </li>
+  </ul>
+</div>
+
+<div class="row">
+  
+  <div class="col-md-3" *ngFor="let item of filteredItems | paginate: config">
+    <div class="card mb-4" style="height: 450px;">
+      <img class="card-img-top" *ngIf="item.imageUrl" [src]="item.imageUrl" alt="Image">
+      <div class="card-body">
+        <h5 class="card-title">{{ item.title }}</h5>
+        <p class="card-text">{{ item.category }}</p>
+        <button class="btn btn-primary" (click)="openBorrowModal(borrowModal, item)">Borrow</button>
+      </div>
+    </div>
+    <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
+  </div>
+</div>
+
+<ng-template #borrowModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="borrowModalLabel">Borrow Book</h5>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="borrowFrm">
+
+      <div class="form-group mt-3">
+        <label for="name" class="form-label">Customer Name</label>
+        <input type="text" class="form-control" id="name" formControlName="name" placeholder="Enter Name">
+        <div *ngIf="borrowFrm.controls['name'].invalid && borrowFrm.controls['name'].touched" class="text-danger">
+          Name is required.
+        </div>
+      </div>
+      <div class="form-group mt-3">
+        <label for="email" class="form-label">Customer Email</label>
+        <input type="email" class="form-control" id="email" formControlName="email" placeholder="Enter Email">
+        <div *ngIf="borrowFrm.controls['email'].invalid && borrowFrm.controls['email'].touched" class="text-danger">
+          Valid email is required.
+        </div>
+      </div>
+      <div class="form-group mt-3">
+        <label for="phone_number" class="form-label">Customer Phone Number</label>
+        <input type="tel" class="form-control" id="phone_number" formControlName="phone_number" placeholder="Enter Phone Number">
+        <div *ngIf="borrowFrm.controls['phone_number'].invalid && borrowFrm.controls['phone_number'].touched" class="text-danger">
+          Valid phone number is required.
+        </div>
+      </div>
+      <div class="form-group mt-3">
+        <label for="address" class="form-label">Customer Address</label>
+        <input type="text" class="form-control" id="address" formControlName="address" placeholder="Enter Address">
+        <div *ngIf="borrowFrm.controls['address'].invalid && borrowFrm.controls['address'].touched" class="text-danger">
+          Address is required.
+        </div>
+      </div>
+      <!-- <div class="form-group mt-3">
+        <label for="newImage" class="form-label">Select New Image:</label>
+        <input type="file" class="form-control" id="newImage" (change)="chooseFile($event)">
+      </div> -->
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">Close</button>
+    <button type="button" class="btn btn-primary" (click)="onSubmit(modal)">Borrow</button>
+  </div>
+</ng-template>

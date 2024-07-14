@@ -1,0 +1,338 @@
+
+<div class="input-group mb-3">
+    <input class="form-control" type="text" [(ngModel)]="searchTerm" (input)="onSearch()" name="search"
+        autocomplete="off" placeholder="&#61442; Searching...">
+    <button class="btn btn-outline-secondary" type="button" (click)="toggleAdvancedFilters()">
+        Advanced Filters
+    </button>
+</div>
+<div class="row" *ngIf="showAdvancedFilters">
+    <div class="col-md-3 mb-3">
+        <label for="title">Title</label>
+        <input type="text" class="form-control" [(ngModel)]="filters.title" (input)="applyFilters()" id="title">
+    </div>
+    <div class="col-md-3 mb-3">
+        <label for="author">Author</label>
+        <input type="text" class="form-control" [(ngModel)]="filters.author" (input)="applyFilters()" id="author">
+    </div>
+   
+    <div class="col-md-2 mb-2">
+        <label for="category">Category</label>
+        <select class="form-control" [(ngModel)]="filters.category" (change)="applyFilters()" id="category">
+            <option value="">Any</option>
+            <option value="Romance">Romance</option>
+            <option value="Fantasy">Fantasy</option>
+            <option value="Fiction">Fiction</option>
+            <option value="Inspirational">Inspirational</option>
+        </select>
+    </div>
+    <div class="col-md-2 mb-2">
+        <label for="opportunities">Opportunities</label>
+        <select class="form-control" [(ngModel)]="filters.opportunities" (change)="applyFilters()" id="opportunities">
+            <option value="">Any</option>
+            <option value="Can Take">Can Take</option>
+            <option value="Only Reading Room">Only Reading Room</option>
+            <option value="Free">Free</option>
+        </select>
+    </div>
+    <div class="col-md-2 btn_clear">
+        <button class="btn btn-outline-secondary" type="button" (click)="clearSearch()">
+            Clear
+        </button>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12 d-flex align-items-stretch">
+
+        <div class="card w-100">
+
+            <div class="card-body p-4">
+
+                <h5 class="card-title fw-semibold mb-4">Book List</h5>
+                <div class="d-flex align-items-center mb-3">
+                   
+                </div>
+                <!-- <div class="form-row">
+                    <div class="col-md-3 mb-3">
+                        <label for="title">Title</label>
+                        <input type="text" class="form-control" [(ngModel)]="filters.title">
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label for="author">Author</label>
+                        <input type="text" class="form-control" [(ngModel)]="filters.author">
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label for="category">Category</label>
+                        <select class="form-control" [(ngModel)]="filters.category">
+                            <option value="">Any</option>
+                            <option value="Romance">Romance</option>
+                            <option value="Fantasy">Fantasy</option>
+                            <option value="Fiction">Fiction</option>
+                            <option value="Inspirational">Inspirational</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label for="opportunities">Opportunities</label>
+                        <select class="form-control" [(ngModel)]="filters.opportunities">
+                            <option value="">Any</option>
+                            <option value="Can Take">Can Take</option>
+                            <option value="Only Reading Room">Only Reading Room</option>
+                            <option value="Free">Free</option>
+                        </select>
+                    </div>
+                </div> -->
+              
+                <button type="button" class="btn btn-outline-success m-1" style="top: 10px; right: 10px;"
+                    data-bs-toggle="modal" data-bs-target="#insertFrm">
+                    Thêm mới
+                </button>
+
+            </div>
+            <div class="table-responsive">
+                <table class="table text-nowrap mb-0 align-middle">
+                    <thead class="text-dark fs-4">
+                        <tr>
+                            <!-- <th class="border-bottom-0">
+                                    <h6 class="fw-semibold mb-0">Id</h6>
+                                </th> -->
+                            <!-- <th class="border-bottom-0">
+                                    <h6 class="fw-semibold mb-0">Image</h6>
+                                </th> -->
+                            <th class="border-bottom-0">
+                                <h6 class="fw-semibold mb-0">Title</h6>
+                            </th>
+                            <th class="border-bottom-0">
+                                <h6 class="fw-semibold mb-0">Author</h6>
+                            </th>
+
+                            <th class="border-bottom-0">
+                                    <h6 class="fw-semibold mb-0">Quantity</h6>
+                                </th>
+                            <th class="border-bottom-0">
+                                <h6 class="fw-semibold mb-0">Opportunities</h6>
+                            </th>
+                            <th class="border-bottom-0">
+                                <h6 class="fw-semibold mb-0">Status</h6>
+                            </th>
+                            <th class="border-bottom-0">
+                                <h6 class="fw-semibold mb-0">Action</h6>
+                            </th>
+                            <!-- <th class="border-bottom-0">
+                                    <h6 class="fw-semibold mb-0">Address</h6>
+                                </th>
+                                <th class="border-bottom-0">
+                                    <h6 class="fw-semibold mb-0">DOB</h6>
+                                </th>
+                                <th class="border-bottom-0">
+                                    <h6 class="fw-semibold mb-0">Course</h6>
+                                </th> -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- @for(item of items; track item.id){ -->
+                        <tr *ngFor="let item of filteredItems | paginate: config ">
+
+                            <!-- <td class="border-bottom-0">
+                                    <h6 class="fw-semibold mb-0">{{item.id}}</h6>
+                                </td> -->
+                            <!-- <td class="border-bottom-0">    
+                                </td> -->
+
+
+                            <td class="border-bottom-0">
+                                <img class="rounded float-left" *ngIf="item.imageUrl" [src]="item.imageUrl" alt="Image"
+                                    width="70">
+                                <span class="mb-0 fw-normal">{{item.title}}</span>
+                            </td>
+                            <td class="border-bottom-0">
+                                <h6 class="fw-semibold mb-1">{{item.author}}</h6>
+                                <span class="fw-normal">{{item.category}}</span>
+                            </td>
+                            <td class="border-bottom-0">
+                                <h6 class="fw-semibold mb-1">{{item.quantity}}</h6>
+                            </td>
+                            <td class="border-bottom-0">
+                                <div class="d-flex align-items-center gap-2">
+                                    <span class="badge"
+                                        [ngClass]="{'bg-primary': item.opportunities === 'Can Take', 'bg-success': item.opportunities === 'Free', 'bg-danger': item.opportunities === 'Only Reading Room'}"
+                                        [class.rounded-3]="true" [class.fw-semibold]="true">{{ item.opportunities
+                                        }}</span>
+                                </div>
+                            </td>
+                            <td class="border-bottom-0">
+                                <h6 class="fw-semibold mb-1">
+                                    <ng-container *ngIf="item.quantity === 0">
+                                        
+                                        <i class="ti ti-x text-danger"></i> 
+                                    </ng-container>
+                                    <ng-container *ngIf="item.quantity === 1">
+                                        <i class="ti ti-alert-circle text-warning" ></i>
+                                        
+                                    </ng-container>
+                                    <ng-container *ngIf="item.quantity > 1">
+                                        <i class="ti ti-check text-success"></i> 
+                                    </ng-container>
+                                </h6>                         </td>
+                            <td class="border-bottom-0">
+                                <i class="ti ti-trash" (click)="deleteItem(item.id)"></i>
+                                <i class="ti ti-edit p-2" data-bs-toggle="modal" data-bs-target="#updateModal"
+                                    (click)="editItem(item)"></i>
+
+                            </td>
+                            <!-- <td class="border-bottom-0">
+                                        <h6 class="fw-semibold mb-0 fs-4">{{item.student_address}}</h6>
+                                    </td>
+                                    <td class="border-bottom-0">
+                                        <h6 class="fw-semibold mb-0 fs-4">{{item.student_dob}}</h6>
+                                    </td> -->
+                            <!-- <td class="border-bottom-0"> -->
+                            <!-- <button class="btn btn-primary" (click)="toggleDetails(item)">Show Details</button>
+                                        <div *ngIf="item.showDetails">
+                                            <h6 class="mb-1">{{ item.course?.course_name }}</h6>
+                                            <p class="mb-1">Enrollment Date: {{ item.course?.enrollment_date }}</p>
+                                            <p class="mb-1">Duration: {{ item.course?.course_duration }}</p>
+                                            <p class="mb-1">Description: {{ item.course?.course_description }}</p>
+                                            <p class="mb-1">Enrollment Status: {{ item.course?.enrollment_status }}</p>
+                                            <p class="mb-1">Price: {{ item.course?.course_price }}</p>
+                                            <hr>
+                                        </div> -->
+                            <!-- </td> -->
+
+
+                        </tr>
+                        <!-- } -->
+                    </tbody>
+                </table>
+
+                <!-- <button class="btn btn-primary" (click)="add()">Add</button>
+                    <button class="btn btn-secondary" (click)="update()">Update</button>
+                    <button class="btn btn-danger" (click)="delete()">Delete</button>
+                    
+                    -->
+                <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal for updating data -->
+<div id="updateModal" class="modal fade" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form [formGroup]="updateFrm" *ngIf="isEditing">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="updateModalLabel">Update Data</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group" *ngIf="updateFrm.controls['imageUrl'].value">
+                        <img class="rounded" [src]="updateFrm.controls['imageUrl'].value" alt="Current Image"
+                            style="max-width: 50%">
+                    </div>
+                    <!-- New input field for selecting a new image -->
+                    <div class="form-group">
+                        <label for="newImage" class="form-label">Select New Image:</label>
+                        <input type="file" class="form-control" id="newImage" (change)="chooseNewImage($event)">
+                    </div>
+                    <div class="form-group">
+                        <label for="author" class="form-label">Item Author</label>
+                        <input type="text" class="form-control" id="author" placeholder="Enter Author"
+                            formControlName="author">
+                    </div>
+                    <div class="form-group">
+                        <label for="title" class="form-label">Item Title</label>
+                        <input type="text" class="form-control" id="title" placeholder="Enter Title"
+                            formControlName="title">
+                    </div>
+                    <div class="form-group">
+                        <label for="quantity" class="form-label">Item Quantity</label>
+                        <input type="number" class="form-control" id="quantity" placeholder="Enter Quantity"
+                            formControlName="quantity">
+                    </div>
+                    <div class="form-group">
+                        <label for="category" class="form-label">Category</label>
+                        <select id="category" class="form-select" formControlName="category">
+                            <option value="Romance">Romance</option>
+                            <option value="Fantasy">Fantasy</option>
+                            <option value="Fiction">Fiction</option>
+                            <option value="Inspirational">Inspirational</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="opportunities" class="form-label">Opportunities</label>
+                        <select id="opportunities" class="form-select" formControlName="opportunities">
+                            <option value="Can Take">Can Take</option>
+                            <option value="Only Reading Room">Only Reading Room</option>
+                            <option value="Free">Free</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" (click)="updateItem()">Update</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Modal for inserting new data -->
+<div id="insertFrm" class="modal fade" tabindex="-1" aria-labelledby="insertModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form [formGroup]="insertFrm" (ngSubmit)="onSubmit()">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="insertModalLabel">Add new books</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="file" class="form-label">Upload Image:</label>
+                        <input type="file" class="form-control" id="file" (change)="chooseFile($event)">
+                    </div>
+                    <div class="form-group">
+                        <label for="author" class="form-label">Item Author</label>
+                        <input type="text" class="form-control" id="author" placeholder="Enter Author"
+                            formControlName="author">
+                    </div>
+                    <div class="form-group">
+                        <label for="title" class="form-label">Item Title</label>
+                        <input type="text" class="form-control" id="title" placeholder="Enter Title"
+                            formControlName="title">
+                    </div>
+                    <div class="form-group">
+                        <label for="quantity" class="form-label">Item Quantity</label>
+                        <input type="number" class="form-control" id="quantity" placeholder="Enter Quantity"
+                            formControlName="quantity">
+                    </div>
+                    <div class="form-group">
+                        <label for="category" class="form-label">Category</label>
+                        <select id="category" class="form-select" formControlName="category">
+                            <option value="Romance">Romance</option>
+                            <option value="Fantasy">Fantasy</option>
+                            <option value="Fiction">Fiction</option>
+                            <option value="Inspirational">Inspirational</option>
+
+
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="opportunities" class="form-label">Opportunities</label>
+                        <select id="opportunities" class="form-select" formControlName="opportunities">
+                            <option value="Can Take">Can Take</option>
+                            <option value="Only Reading Room">Only Reading Room</option>
+                            <option value="Free">Free</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" [disabled]="!insertFrm.valid">Add</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="py-6 px-6 text-center">
+    <p class="mb-0 fs-4">Design and Developed by <a href="https://adminmart.com/" target="_blank"
+            class="pe-1 text-primary text-decoration-underline">AdminMart.com</a></p>
+</div>

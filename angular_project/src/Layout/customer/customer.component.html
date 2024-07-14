@@ -1,0 +1,309 @@
+<input class="form-control mt-2 mb-2" type="text" [(ngModel)]="searchTerm" (input)="onSearch()" name="search"
+    autocomplete="off" placeholder="&#61442;  Searching....">
+
+<div class="row">
+    <div class="col-lg-12 d-flex align-items-stretch">
+
+        <div class="card w-100">
+
+            <div class="card-body p-4">
+
+                <h5 class="card-title fw-semibold mb-4">Customer List</h5>
+
+                <!-- <button type="button" class="btn btn-outline-success m-1" style="top: 10px; right: 10px;"
+                    data-bs-toggle="modal" data-bs-target="#insertFrm">
+                    Thêm mới
+                </button> -->
+
+            </div>
+            <div class="table-responsive">
+                <table class="table text-nowrap mb-0 align-middle">
+                    <thead class="text-dark fs-4">
+                        <tr>
+                            <!-- <th class="border-bottom-0">
+                                    <h6 class="fw-semibold mb-0">Id</h6>
+                                </th> -->
+                            <!-- <th class="border-bottom-0">
+                                    <h6 class="fw-semibold mb-0">Image</h6>
+                                </th> -->
+                            <!-- <th class="border-bottom-0">
+                                <h6 class="fw-semibold mb-0">Image</h6>
+                            </th> -->
+                            <th class="border-bottom-0">
+                                <h6 class="fw-semibold mb-0">Name</h6>
+                            </th>
+
+
+                            <th class="border-bottom-0">
+                                <h6 class="fw-semibold mb-0">Email</h6>
+                            </th>
+                            <th class="border-bottom-0">
+                                <h6 class="fw-semibold mb-0">Phone Number</h6>
+                            </th>
+                            <th class="border-bottom-0">
+                                <h6 class="fw-semibold mb-0">Address</h6>
+                            </th>
+                            <th class="border-bottom-0">
+                                <h6 class="fw-semibold mb-0">Details</h6>
+                            </th>
+
+                            <th class="border-bottom-0">
+                                <h6 class="fw-semibold mb-0">Action</h6>
+                            </th>
+                            <!-- 
+                                <th class="border-bottom-0">
+                                    <h6 class="fw-semibold mb-0">DOB</h6>
+                                </th>
+                                <th class="border-bottom-0">
+                                    <h6 class="fw-semibold mb-0">Course</h6>
+                                </th> -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- @for(item of items; track item.id){ -->
+                        <tr *ngFor="let cus of filteredCus | paginate: config">
+
+                            <!-- <td class="border-bottom-0">
+                                    <h6 class="fw-semibold mb-0">{{item.id}}</h6>
+                                </td> -->
+                            <!-- <td class="border-bottom-0">    
+                                </td> -->
+
+
+                            <!-- <td class="border-bottom-0">
+                                <img class="rounded float-left" *ngIf="cus.imageUrl" [src]="cus.imageUrl" alt="Image"
+                                    width="70">
+                            </td> -->
+                            <td class="border-bottom-0">
+                                <span class="mb-0 fw-normal">{{cus.name}} </span>
+                            </td>
+                            <td class="border-bottom-0">
+                                <h6 class="fw-semibold mb-1">{{cus.email}}</h6>
+                            </td>
+                            <td class="border-bottom-0">
+                                <h6 class="fw-semibold mb-1">{{cus.phone_number}}</h6>
+                            </td>
+                            <td class="border-bottom-0">
+                                <h6 class="fw-semibold mb-1">{{cus.address}}</h6>
+                            </td>
+                            <td class="border-bottom-0">
+                                <button type="button" class="btn btn-outline-info btn-sm"
+                                    (click)="toggleBorrowedItems(cus)">
+                                    <i class="ti ti-eye"></i>
+                                </button>
+
+                                <!-- <form *ngIf="cus.showBorrowedItems" class="mt-3 mx-auto text-center">
+                                        <div class="mb-3">
+                                            <label class="form-label">Borrowed Items:</label>
+                                            <div *ngFor="let item of cus.borrowedItems" class="mb-2">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title">{{ item.title }}</h5>
+                                                        <p class="card-text">{{ item.category }}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form> -->
+                                <!-- <div *ngIf="!cus.showBorrowedItems">
+                                        <h6 class="fw-semibold mb-1">No borrowed items</h6>
+                                    </div> -->
+                                <!-- <div *ngIf="cus.borrowedItems">
+                                        <ul>
+                                            <li *ngFor="let item of cus.borrowedItems">
+                                                <img >
+                                                <h6 class="fw-semibold mb-1">{{ item.title }}</h6>
+                                                <p>{{ item.category }}</p>
+                                              </li>
+                                        </ul>
+                                    </div>
+                                    <div *ngIf="!cus.borrowedItems">
+                                        <h6 class="fw-semibold mb-1">No borrowed items</h6>
+                                    </div>                                 -->
+                            </td>
+
+                            <td class="border-bottom-0">
+                                <i class="ti ti-trash" (click)="deleteCustomer(cus.id)"></i>
+                                <i class="ti ti-edit p-2" data-bs-toggle="modal" data-bs-target="#updateModal"
+                                    (click)="editCustomer(cus)"></i>
+
+                            </td>
+                            <!-- <td class="border-bottom-0">
+                                        <h6 class="fw-semibold mb-0 fs-4">{{item.student_address}}</h6>
+                                    </td>
+                                    <td class="border-bottom-0">
+                                        <h6 class="fw-semibold mb-0 fs-4">{{item.student_dob}}</h6>
+                                    </td> -->
+                            <!-- <td class="border-bottom-0"> -->
+                            <!-- <button class="btn btn-primary" (click)="toggleDetails(item)">Show Details</button>
+                                        <div *ngIf="item.showDetails">
+                                            <h6 class="mb-1">{{ item.course?.course_name }}</h6>
+                                            <p class="mb-1">Enrollment Date: {{ item.course?.enrollment_date }}</p>
+                                            <p class="mb-1">Duration: {{ item.course?.course_duration }}</p>
+                                            <p class="mb-1">Description: {{ item.course?.course_description }}</p>
+                                            <p class="mb-1">Enrollment Status: {{ item.course?.enrollment_status }}</p>
+                                            <p class="mb-1">Price: {{ item.course?.course_price }}</p>
+                                            <hr>
+                                        </div> -->
+                            <!-- </td> -->
+
+
+                        </tr>
+                        <!-- } -->
+                    </tbody>
+                </table>
+
+                <!-- <button class="btn btn-primary" (click)="add()">Add</button>
+                    <button class="btn btn-secondary" (click)="update()">Update</button>
+                    <button class="btn btn-danger" (click)="delete()">Delete</button>
+                    
+                    -->
+                <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal for displaying borrowed items -->
+<div class="overlay" *ngIf="selectedCustomer">
+    <div class="overlay-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Borrowed Items of {{ selectedCustomer.name }}</h5>
+            <button type="button" class="btn-close" aria-label="Close" (click)="closeForm()"></button>
+        </div>
+        <div class="modal-body">
+            <div *ngIf="selectedCustomer.borrowedItems && selectedCustomer.borrowedItems.length > 0">
+                <div *ngFor="let item of selectedCustomer.borrowedItems" class="card mb-3">
+                    <img class="card-img-top" style="width:50%" *ngIf="item.imageUrl" [src]="item.imageUrl" alt="Image">
+
+                    <div class="card-body">
+
+                        <h5 class="card-title">{{ item.title }}</h5>
+                        <p class="card-text">{{ item.category }}</p>
+                        <button type="button" class="btn btn-secondary"
+                            (click)="item.id && returnBook(selectedCustomer, item.id)">
+                            Return Book
+                        </button>
+
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="!selectedCustomer.borrowedItems || selectedCustomer.borrowedItems.length === 0">
+                <p>No borrowed items</p>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="closeForm()">Close</button>
+        </div>
+    </div>
+</div>
+<!-- Modal for viewing borrowed item details -->
+<!-- <td class="border-bottom-0">
+        <div *ngIf="cus.showBorrowedItems">
+            <ul>
+                <li *ngFor="let item of cus.borrowedItems">
+                    <img [src]="item.imageUrl" alt="Item Image" width="50">
+                    <h6 class="fw-semibold mb-1">{{ item.title }}</h6>
+                    <p>{{ item.category }}</p>
+                </li>
+            </ul>
+        </div>
+        <div *ngIf="!cus.showBorrowedItems">
+            <h6 class="fw-semibold mb-1">No borrowed items</h6>
+        </div>
+    </td> -->
+
+<!-- Modal for updating data -->
+<div id="updateModal" class="modal fade" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form [formGroup]="updateFrm" *ngIf="isEditing">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="updateModalLabel">Update Data</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- <div class="form-group" *ngIf="updateFrm.controls['imageUrl'].value">
+                        <img class="rounded" [src]="updateFrm.controls['imageUrl'].value" alt="Current Image"
+                            style="max-width: 50%">
+                    </div> -->
+                    <!-- New input field for selecting a new image -->
+                    <!-- <div class="form-group">
+                        <label for="newImage" class="form-label">Select New Image:</label>
+                        <input type="file" class="form-control" id="newImage" (change)="chooseNewImage($event)">
+                    </div> -->
+                    <div class="form-group">
+                        <label for="name" class="form-label">Item Name</label>
+                        <input type="text" class="form-control" id="name" placeholder="Enter Name"
+                            formControlName="name">
+                    </div>
+                    <div class="form-group">
+                        <label for="email" class="form-label">Item Email</label>
+                        <input type="text" class="form-control" id="email" placeholder="Enter Email"
+                            formControlName="email">
+                    </div>
+                    <div class="form-group">
+                        <label for="phone_number" class="form-label">Item Phone Number</label>
+                        <input type="text" class="form-control" id="phone_number" placeholder="Enter Phone Number"
+                            formControlName="phone_number">
+                    </div>
+                    <div class="form-group">
+                        <label for="address" class="form-label">Item Address</label>
+                        <input type="text" class="form-control" id="address" placeholder="Enter Address"
+                            formControlName="address">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" (click)="updateItem()">Update</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Modal for inserting new data -->
+<div id="insertFrm" class="modal fade" tabindex="-1" aria-labelledby="insertModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form [formGroup]="insertFrm" (ngSubmit)="onSubmit()">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="insertModalLabel">Add new books</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- <div class="form-group">
+                        <label for="file" class="form-label">Upload Image:</label>
+                        <input type="file" class="form-control" id="file" (change)="chooseFile($event)">
+                    </div> -->
+                    <div class="form-group">
+                        <label for="name" class="form-label">Item Name</label>
+                        <input type="text" class="form-control" id="name" placeholder="Enter Name"
+                            formControlName="name">
+                    </div>
+                    <div class="form-group">
+                        <label for="email" class="form-label">Item Email</label>
+                        <input type="text" class="form-control" id="email" placeholder="Enter Email"
+                            formControlName="email">
+                    </div>
+                    <div class="form-group">
+                        <label for="phone_number" class="form-label">Item Phone Number</label>
+                        <input type="text" class="form-control" id="phone_number" placeholder="Enter Phone Number"
+                            formControlName="phone_number">
+                    </div>
+                    <div class="form-group">
+                        <label for="address" class="form-label">Item Address</label>
+                        <input type="text" class="form-control" id="address" placeholder="Enter Address"
+                            formControlName="address">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" [disabled]="!insertFrm.valid">Add</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="py-6 px-6 text-center">
+    <p class="mb-0 fs-4">Design and Developed by <a href="https://adminmart.com/" target="_blank"
+            class="pe-1 text-primary text-decoration-underline">AdminMart.com</a></p>
+</div>

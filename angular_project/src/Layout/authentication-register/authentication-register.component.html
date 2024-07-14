@@ -1,0 +1,31 @@
+<div class="card-body">
+    <a href="./index.html" class="text-nowrap logo-img text-center d-block py-3 w-100">
+        <img src="../assets/images/logos/dark-logo.svg" width="180" alt="">
+    </a>
+    <p class="text-center">Your Social Campaigns</p>
+    <form [formGroup]="userFrm" (ngSubmit)="createUser()">
+        <div class="mb-3 form-group">
+            <label for="email" class="form-label">Email Address</label>
+            <input type="email" class="form-control" formControlName="email" id="email">
+            <div *ngIf="userFrm.get('email').invalid && (userFrm.get('email').dirty || userFrm.get('email').touched)">
+                <small *ngIf="userFrm.get('email').hasError('required')" class="text-danger">Email is required.</small>
+                <small *ngIf="userFrm.get('email').hasError('email')" class="text-danger">Email is invalid.</small>
+            </div>
+        </div>
+
+        <div class="mb-4 form-group">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" class="form-control" formControlName="password" id="password">
+        </div>
+
+        <div class="mb-4 form-group">
+            <label for="confirmPassword" class="form-label">Confirm Password</label>
+            <input type="password" class="form-control" formControlName="confirmPassword" id="confirmPassword">
+            <div *ngIf="userFrm.hasError('passwordMismatch') && (userFrm.get('confirmPassword').dirty || userFrm.get('confirmPassword').touched)">
+                <small class="text-danger">Passwords do not match.</small>
+            </div>
+        </div>
+
+        <button type="submit" [disabled]="!userFrm.valid" class="btn btn-primary w-100 py-2 fs-5 mb-4 rounded-2">Sign Up</button>
+    </form>
+</div>

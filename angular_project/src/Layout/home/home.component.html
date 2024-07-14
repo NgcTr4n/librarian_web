@@ -1,0 +1,35 @@
+<div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+  data-sidebar-position="fixed" data-header-position="fixed">
+  <!-- Sidebar Start -->
+  <app-sidebar />
+  <!--  Sidebar End -->
+  <!--  Main wrapper -->
+  <div class="body-wrapper">
+    <!--  Header Start -->
+    <header class="app-header">
+      <app-navbar />
+    </header>
+    <!--  Header End -->
+
+    <div class="container-fluid">
+      <router-outlet></router-outlet>
+
+      <!-- <app-container /> -->
+      <!-- <app-main /> -->
+    <!-- </div>
+    <div class="container-test">
+      <div id="two-way-1">
+        <h2>TWO - WAY BINDING 1 </h2>
+        <app-sizer [size]="fontSizePx" (sizeChange)="fontSizePx=$event"></app-sizer>
+        <label>FontSize (px): <input [(ngModel)]="fontSizePx"></label>
+      </div>
+      ------------------------------------------------
+      <h2>TWO - WAY BINDING 2 </h2>
+      <sizer [(size)]="fontSizePX"></sizer>
+      <div [style.font-size.px]="fontSizePx">Resizable Text</div>
+      <label>FontSize (px): <input [(ngModel)]="fontSizePx"></label>
+    </div> -->
+  </div>
+
+  <!-- <app-authentication-login/> -->
+</div>
